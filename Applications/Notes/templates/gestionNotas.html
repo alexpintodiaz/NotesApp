@@ -1,0 +1,60 @@
+{% extends "./base.html" %}
+
+{% block title %} Principal {% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <strong class="text-dark">{{ message }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <h2>Notes management</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registerNote/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" id="txtNote" name="txtNote" class="form-control py-2 my-2" placeholder="Note Title" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="txtDescription" name="txtDescription" class="form-control py-2 my-2" placeholder="Description" required>
+                    </div>
+                    <div class="form-group d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-primary py-2 my-2">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>List of notes</h1>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Note</th>
+                        <th>Description</th>
+                        <th colspan="2">Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for n in allNotes %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{n.title}}</td>
+                        <td>{{n.description}}</td>
+                        <td><a href="editNote/{{n.title}}" class="btn btn-info">Edit</a></td>
+                        <td><a href="deleteNote/{{n.title}}" class="btn btn-danger btnEliminate">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
