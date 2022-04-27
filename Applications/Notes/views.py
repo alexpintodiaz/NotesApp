@@ -5,7 +5,7 @@ from django.contrib import messages
 # Create your views here.
 
 
-def home(request):
+def index(request):
     allNotes = NotesApp.objects.all()
     """ messages.success(request, 'Notes listed') """
     return render(request, "gestionNotas.html", {"allNotes": allNotes})
